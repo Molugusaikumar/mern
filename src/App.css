@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* src/App.css */
+
+/* General styling for the search box */
+.search-box {
+  padding: 20px;
+  width: 1450px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+/* Change border color to blue when the search box is focused */
+.search-box:focus {
+  border-color: blue;
+  outline: none;
+  /* Remove the default browser outline */
+}
