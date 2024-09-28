@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -14,7 +13,7 @@ const App = () => {
   const pageSize = 10;  // Number of items per page
 
   // Fetch products from the API
-  const fetchProducts = async (page) => {
+  const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`https://dummyjson.com/products`, {
@@ -30,12 +29,12 @@ const App = () => {
       console.error('Error fetching products:', error);
     }
     setLoading(false);
-  };
+  }, [page, products.length]); // Memoize with page and products length as dependencies
 
   // Fetch products when the page number changes
   useEffect(() => {
-    fetchProducts(page);
-  }, [page]);
+    fetchProducts();
+  }, [fetchProducts]); // Add fetchProducts to the dependency array
 
   // Handle search input change
   const handleSearch = (event) => {
@@ -70,7 +69,7 @@ const App = () => {
         placeholder="Search products..."
         value={searchTerm}
         onChange={handleSearch}
-        className="search-box" // Added CSS class here
+        className="search-box"
       />
 
       {/* Display products in groups of 10 */}
